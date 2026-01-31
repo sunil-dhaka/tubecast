@@ -56,10 +56,20 @@ class YouTubeService:
         storage = Storage(str(CONFIG_DIR / "oauth2.json"))
         credentials = storage.get()
 
-        if credentials is None or credentials.invalid:
+        if credentials is None or credentials.invalid or credentials.access_token_expired:
             from oauth2client.tools import run_flow, argparser
-            args = argparser.parse_args([])
-            credentials = run_flow(flow, storage, args)
+            # Try to refresh first if we have a refresh token
+            if credentials and credentials.refresh_token and not credentials.invalid:
+                try:
+                    credentials.refresh(httplib2.Http())
+                    storage.put(credentials)
+                except Exception:
+                    # Refresh failed, need full re-auth
+                    args = argparser.parse_args([])
+                    credentials = run_flow(flow, storage, args)
+            else:
+                args = argparser.parse_args([])
+                credentials = run_flow(flow, storage, args)
 
         self._youtube = build(
             YOUTUBE_API_SERVICE_NAME,

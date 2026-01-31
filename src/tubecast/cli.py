@@ -530,18 +530,18 @@ def _interactive_main() -> None:
             break
 
         elif action == "upload":
-            file_path = questionary.path(
-                "Select video file:",
-                only_files=True,
+            file_path = questionary.text(
+                "Enter video file path:",
+                validate=lambda p: Path(p).is_file() or "File not found",
             ).ask()
 
             if file_path and Path(file_path).exists():
                 _upload_interactive(Path(file_path), load_config())
 
         elif action == "batch":
-            folder_path = questionary.path(
-                "Select folder with videos:",
-                only_directories=True,
+            folder_path = questionary.text(
+                "Enter folder path with videos:",
+                validate=lambda p: Path(p).is_dir() or "Folder not found",
             ).ask()
 
             if folder_path and Path(folder_path).exists():

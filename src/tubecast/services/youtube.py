@@ -112,7 +112,7 @@ class YouTubeService:
             },
         }
 
-        media = MediaFileUpload(file_path, chunksize=1024 * 1024, resumable=True)
+        media = MediaFileUpload(file_path, chunksize=-1, resumable=True)
 
         insert_request = self.youtube.videos().insert(
             part=",".join(body.keys()),

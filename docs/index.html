@@ -281,7 +281,9 @@ section {
 }
 .hero-install code {
   color: var(--text-primary);
+  font-family: var(--font-mono);
 }
+code { font-family: var(--font-mono); }
 .hero-install .copy-btn {
   background: none;
   border: none;
@@ -963,6 +965,7 @@ section {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         </button>
       </div>
+      <p style="color: var(--text-dim); font-size: 13px; margin: 8px 0; text-align: center;">or</p>
       <div class="install-cmd install-cmd--secondary">
         <code>uv pip install tubecast</code>
         <button class="copy-btn" data-copy="uv pip install tubecast" aria-label="Copy uv pip install command">
